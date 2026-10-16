@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Startup Clicker · Jugar</title>
+  <meta name="description" content="Programa, contrata devs, esquiva bugs y vende tu startup. Juego clicker gratis en el navegador.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Startup Clicker — de un escritorio a un unicornio">
+  <meta property="og:description" content="Programa, contrata devs, esquiva bugs y vende tu startup. ¡Juega gratis en el navegador!">
+  <meta property="og:image" content="__PUBLIC_URL__/assets/og.png">
+  <meta property="og:url" content="__PUBLIC_URL__/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/icon_junior.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <main id="stage">
+      <canvas id="bg"></canvas>
+      <canvas id="game"></canvas>
+      <div id="hud">
+        <div class="hud-left">
+          <div class="money">$<span id="money">0.00</span> <small>USD</small></div>
+          <div class="rate"><span id="rate">0.00</span> $/s · <span id="office">Cuarto en casa</span></div>
+          <div id="buffs"></div>
+        </div>
+        <div class="hud-right">
+          <div class="cal">📅 Día <b id="day">1</b> de <span id="dayMax">180</span></div>
+          <div class="bar small"><div id="calBar"></div></div>
+          <div class="book">🚀 <span id="pages">0</span> / <span id="bookTarget">2,000</span> commits v1.0</div>
+          <div class="bar small"><div id="bookBar"></div></div>
+          <button id="sellBtn" class="sell-hud"></button>
+        </div>
+      </div>
+      <div id="hint">Haz clic en la computadora (o presiona cualquier tecla) para programar</div>
+      <div id="toast" hidden></div>
+      <div id="zoomCtl"><button id="zin" title="Acercar (o usa la rueda del mouse)">+</button><button id="zout" title="Alejar">−</button></div>
+    </main>
+
+    <aside id="panel">
+      <header class="brand">
+        <h1>Startup Clicker</h1>
+        <div class="doc">
+          <div class="doc-row"><span>Commit actual</span><span><span id="docProg">0</span>/<span id="docLen">10</span> teclas</span></div>
+          <div class="bar"><div id="docBar"></div></div>
+          <div class="doc-row muted"><span>Pago por commit: $<span id="docValue">1.00</span></span><span><span id="docs">0</span> commits</span></div>
+        </div>
+      </header>
+
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-tab="hire" role="tab">Equipo</button>
+        <button class="tab" data-tab="up" role="tab">Mejoras</button>
+        <button class="tab" data-tab="ach" role="tab">Logros</button>
+      </nav>
+
+      <div class="list" id="list-hire"></div>
+      <div class="list" id="list-up" hidden></div>
+      <div class="list" id="list-ach" hidden>
+        <div class="muted small ach-head" id="achHead"></div>
+        <div id="achList"></div>
+      </div>
+
+      <footer class="foot">
+        <span class="muted">Clic: +<span id="clickPow">1</span> tecla · Equipo: <span id="kps">0</span> teclas/s</span>
+        <span class="foot-btns">
+          <a href="./" class="ghost" title="Volver al inicio">🏠</a>
+          <button id="mute" class="ghost" title="Sonido">🔊</button>
+          <button id="reset" class="ghost danger" title="Borrar todo el progreso">Borrar</button>
+        </span>
+      </footer>
+    </aside>
+  </div>
+
+  <div id="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <h2 id="mTitle"></h2>
+      <div id="mBody"></div>
+      <div class="modal-btns">
+        <button id="mCancel" class="ghost">Seguir trabajando</button>
+        <button id="mOk" class="btn-primary">Vender la startup</button>
+      </div>
+    </div>
+  </div>
+  <div id="starView" hidden>
+    <div class="sv-top">
+      <div class="sv-title">Tus estrellas de GitHub</div>
+      <div class="sv-stars">⭐ <b id="svStars">0</b> estrellas para gastar</div>
+      <div class="sv-sub" id="svSub"></div>
+    </div>
+    <div class="sv-sky" id="svSky"><svg id="svLines" viewBox="0 0 100 100" preserveAspectRatio="none"></svg></div>
+    <div class="sv-detail" id="svDetail">Toca una estrella para ver qué hace.</div>
+    <button id="svStart" class="btn-primary sv-start">Fundar nueva startup →</button>
+  </div>
+  <script src="game.js"></script>
+  <script type="module" src="game-online.js"></script>
+</body>
+</html>

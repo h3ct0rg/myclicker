@@ -1,3 +1,4 @@
+# Plantilla de nginx: al arrancar el contenedor, ${PUBLIC_URL} se reemplaza por la variable de entorno.
 server {
     listen 80;
     server_name _;
@@ -6,6 +7,11 @@ server {
 
     gzip on;
     gzip_types text/css application/javascript image/svg+xml;
+
+    # las etiquetas de vista previa (og:image, og:url) necesitan la URL pública completa
+    sub_filter '__PUBLIC_URL__' '${PUBLIC_URL}';
+    sub_filter_once off;
+    sub_filter_types text/html;
 
     # el HTML, JS y CSS se revalidan siempre para que las actualizaciones se vean al recargar
     location ~* \.(html|js|css)$ {

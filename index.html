@@ -3,86 +3,101 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Startup Clicker</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Startup Clicker — de un escritorio a un unicornio</title>
+  <meta name="description" content="Programa, contrata devs, esquiva bugs y vende tu startup. Juego clicker gratis en el navegador.">
+  <meta name="theme-color" content="#16112a">
+
+  <!-- vista previa al compartir (WhatsApp, Facebook, X, Telegram...) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Startup Clicker">
+  <meta property="og:title" content="Startup Clicker — de un escritorio a un unicornio">
+  <meta property="og:description" content="Programa, contrata devs, esquiva bugs y vende tu startup. ¡Juega gratis en el navegador!">
+  <meta property="og:image" content="__PUBLIC_URL__/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Un dev programando en su escritorio en una oficina isométrica pixel art">
+  <meta property="og:url" content="__PUBLIC_URL__/">
+  <meta property="og:locale" content="es_LA">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Startup Clicker — de un escritorio a un unicornio">
+  <meta name="twitter:description" content="Programa, contrata devs, esquiva bugs y vende tu startup. ¡Juega gratis en el navegador!">
+  <meta name="twitter:image" content="__PUBLIC_URL__/assets/og.png">
+
+  <link rel="icon" type="image/png" href="assets/icon_junior.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="landing.css">
 </head>
 <body>
-  <div id="app">
-    <main id="stage">
-      <canvas id="bg"></canvas>
-      <canvas id="game"></canvas>
-      <div id="hud">
-        <div class="hud-left">
-          <div class="money">$<span id="money">0.00</span> <small>USD</small></div>
-          <div class="rate"><span id="rate">0.00</span> $/s · <span id="office">Cuarto en casa</span></div>
-          <div id="buffs"></div>
-        </div>
-        <div class="hud-right">
-          <div class="cal">📅 Día <b id="day">1</b> de <span id="dayMax">180</span></div>
-          <div class="bar small"><div id="calBar"></div></div>
-          <div class="book">🚀 <span id="pages">0</span> / <span id="bookTarget">2,000</span> commits v1.0</div>
-          <div class="bar small"><div id="bookBar"></div></div>
-          <button id="sellBtn" class="sell-hud"></button>
-        </div>
+  <main class="hero">
+    <section class="hero-text">
+      <p class="kicker">Juego clicker · gratis en el navegador</p>
+      <h1 class="title">Startup<span>Clicker</span></h1>
+      <p class="tagline">De un escritorio en tu cuarto a un unicornio de Big Tech. Programa, contrata devs, esquiva bugs y vende tu startup antes de la fecha de lanzamiento.</p>
+      <div class="actions">
+        <a class="btn btn-play" href="juego.html">▶ Jugar</a>
+        <button class="btn" id="cfgBtn" type="button">⚙ Configurar</button>
+        <button class="btn" id="shareBtn" type="button">🔗 Compartir</button>
       </div>
-      <div id="hint">Haz clic en la computadora (o presiona cualquier tecla) para programar</div>
-      <div id="toast" hidden></div>
-      <div id="zoomCtl"><button id="zin" title="Acercar (o usa la rueda del mouse)">+</button><button id="zout" title="Alejar">−</button></div>
-    </main>
+      <p class="who">Juegas como <b id="whoName">…</b> · <button class="link" id="renameBtn" type="button">cambiar nombre</button></p>
+    </section>
+    <section class="hero-art" aria-hidden="true">
+      <canvas id="hero"></canvas>
+    </section>
+  </main>
 
-    <aside id="panel">
-      <header class="brand">
-        <h1>Startup Clicker</h1>
-        <div class="doc">
-          <div class="doc-row"><span>Commit actual</span><span><span id="docProg">0</span>/<span id="docLen">10</span> teclas</span></div>
-          <div class="bar"><div id="docBar"></div></div>
-          <div class="doc-row muted"><span>Pago por commit: $<span id="docValue">1.00</span></span><span><span id="docs">0</span> commits</span></div>
-        </div>
-      </header>
+  <section class="boards">
+    <article class="board">
+      <h2><span class="live-dot"></span> En línea ahora <span class="pill" id="onlineCount">0</span></h2>
+      <ul class="plist" id="onlineList"><li class="empty">Conectando…</li></ul>
+    </article>
+    <article class="board">
+      <h2>🏆 Jugadores recientes</h2>
+      <ul class="plist" id="playersList"><li class="empty">Conectando…</li></ul>
+    </article>
+  </section>
 
-      <nav class="tabs" role="tablist">
-        <button class="tab active" data-tab="hire" role="tab">Equipo</button>
-        <button class="tab" data-tab="up" role="tab">Mejoras</button>
-        <button class="tab" data-tab="ach" role="tab">Logros</button>
-      </nav>
+  <footer class="foot">
+    <span id="dbStatus" class="status">● conectando</span>
+    <span>Arte pixel generado con PixelLab · <a href="https://github.com/h3ct0rg/myclicker" target="_blank" rel="noopener">Código en GitHub</a></span>
+  </footer>
 
-      <div class="list" id="list-hire"></div>
-      <div class="list" id="list-up" hidden></div>
-      <div class="list" id="list-ach" hidden>
-        <div class="muted small ach-head" id="achHead"></div>
-        <div id="achList"></div>
+  <!-- Configurar -->
+  <dialog id="cfgDlg" class="dlg">
+    <form method="dialog" id="cfgForm">
+      <h3>⚙ Configuración</h3>
+      <label class="field">Tu nombre de jugador
+        <input id="cfgName" maxlength="20" autocomplete="nickname" required>
+      </label>
+      <label class="check"><input type="checkbox" id="cfgSound"> Sonido activado</label>
+      <div class="danger-zone">
+        <button type="button" class="btn btn-danger" id="cfgReset">Borrar mi progreso</button>
+        <small>Empieza una partida nueva desde cero en este navegador.</small>
       </div>
-
-      <footer class="foot">
-        <span class="muted">Clic: +<span id="clickPow">1</span> tecla · Equipo: <span id="kps">0</span> teclas/s</span>
-        <span class="foot-btns">
-          <button id="mute" class="ghost" title="Sonido">🔊</button>
-          <button id="reset" class="ghost danger" title="Borrar todo el progreso">Borrar</button>
-        </span>
-      </footer>
-    </aside>
-  </div>
-
-  <div id="modal" hidden>
-    <div class="modal-card" role="dialog" aria-modal="true">
-      <h2 id="mTitle"></h2>
-      <div id="mBody"></div>
-      <div class="modal-btns">
-        <button id="mCancel" class="ghost">Seguir trabajando</button>
-        <button id="mOk" class="btn-primary">Vender la startup</button>
+      <div class="dlg-btns">
+        <button value="cancel" class="btn" formnovalidate>Cancelar</button>
+        <button value="ok" class="btn btn-play" id="cfgSave">Guardar</button>
       </div>
-    </div>
-  </div>
-  <div id="starView" hidden>
-    <div class="sv-top">
-      <div class="sv-title">Tus estrellas de GitHub</div>
-      <div class="sv-stars">⭐ <b id="svStars">0</b> estrellas para gastar</div>
-      <div class="sv-sub" id="svSub"></div>
-    </div>
-    <div class="sv-sky" id="svSky"><svg id="svLines" viewBox="0 0 100 100" preserveAspectRatio="none"></svg></div>
-    <div class="sv-detail" id="svDetail">Toca una estrella para ver qué hace.</div>
-    <button id="svStart" class="btn-primary sv-start">Fundar nueva startup →</button>
-  </div>
-  <script src="game.js"></script>
+    </form>
+  </dialog>
+
+  <!-- Compartir (computadora) -->
+  <dialog id="shareDlg" class="dlg">
+    <form method="dialog">
+      <h3>🔗 Compartir Startup Clicker</h3>
+      <div class="share-url"><input id="shareUrl" readonly><button type="button" class="btn" id="copyBtn">Copiar</button></div>
+      <div class="share-grid">
+        <a class="btn share-wa" id="shareWa" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn share-x" id="shareX" target="_blank" rel="noopener">X / Twitter</a>
+        <a class="btn share-fb" id="shareFb" target="_blank" rel="noopener">Facebook</a>
+        <a class="btn share-tg" id="shareTg" target="_blank" rel="noopener">Telegram</a>
+      </div>
+      <div class="dlg-btns"><button value="close" class="btn">Cerrar</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" hidden></div>
+  <script type="module" src="landing.js"></script>
 </body>
 </html>

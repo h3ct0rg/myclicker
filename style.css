@@ -94,6 +94,7 @@ button { font: inherit; color: inherit; }
 .foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 10px 16px; font-size: 12px; }
 .foot-btns { display: flex; gap: 6px; flex: none; }
 .ghost { background: transparent; border: 1px solid var(--line); border-radius: 8px; padding: 5px 9px; cursor: pointer; }
+a.ghost { text-decoration: none; display: inline-flex; align-items: center; }
 .ghost:hover { border-color: var(--muted); }
 .ghost.danger:hover { border-color: var(--danger); color: var(--danger); }
 

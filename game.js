@@ -120,6 +120,9 @@ function save() {
 }
 
 let S = load();
+// preferencias de la portada (sonido)
+const PREFS_KEY = 'startupclicker.prefs';
+try { const p = JSON.parse(localStorage.getItem(PREFS_KEY) || '{}'); if (typeof p.muted === 'boolean') S.muted = p.muted; } catch (e) { /* ignorar */ }
 
 // estado de la sesión (no se guarda)
 const combo = { heat: 0 };
@@ -1590,7 +1593,10 @@ $('sellBtn').addEventListener('click', () => openSell(false));
 $('mOk').addEventListener('click', doPrestige);
 $('mCancel').addEventListener('click', () => { if (!forcedSale) { paused = false; $('modal').hidden = true; } });
 $('svStart').addEventListener('click', startNewCompany);
-$('mute').addEventListener('click', () => { S.muted = !S.muted; updateUI(); });
+$('mute').addEventListener('click', () => {
+  S.muted = !S.muted; updateUI();
+  try { const p = JSON.parse(localStorage.getItem(PREFS_KEY) || '{}'); p.muted = S.muted; localStorage.setItem(PREFS_KEY, JSON.stringify(p)); } catch (e) { /* ignorar */ }
+});
 $('reset').addEventListener('click', () => {
   if (!confirm('¿Borrar TODO el progreso, incluidas estrellas y logros? No se puede deshacer.')) return;
   S = fresh(); screenBuf = ''; textPos = 0; charAcc = 0; floats = []; particles = [];
