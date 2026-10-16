@@ -1,8 +1,21 @@
+networks:
+  startup-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.98.0.0/24
+  nginx-network:
+    external: true
+    name: nginx-manager_default
+
 services:
   startup-clicker:
     build: .
     image: startup-clicker:latest
     container_name: startup-clicker
     ports:
-      - "8080:80"
+      - "8082:80"
     restart: unless-stopped
+    networks:
+      - startup-network
+      - nginx-network
