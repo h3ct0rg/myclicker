@@ -1,0 +1,8 @@
+services:
+  startup-clicker:
+    build: .
+    image: startup-clicker:latest
+    container_name: startup-clicker
+    ports:
+      - "8080:80"
+    restart: unless-stopped
