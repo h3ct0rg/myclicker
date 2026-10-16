@@ -2,7 +2,7 @@
 FROM nginx:1.27-alpine
 
 # URL pública del sitio (sin "/" final). Se usa en la vista previa al compartir (WhatsApp, redes).
-ENV PUBLIC_URL=http://localhost:8082
+ENV PUBLIC_URL=https://myclick.thesender.net
 
 COPY default.conf.template /etc/nginx/templates/default.conf.template
 COPY index.html juego.html landing.css landing.js online.js game-online.js game.js style.css /usr/share/nginx/html/
